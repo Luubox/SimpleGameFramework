@@ -5,16 +5,16 @@ namespace SimpleGamesLib
 {
     public class World
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
 
         public List<Creature> Creatures { get; set; }
         public List<GameObject> Objects { get; set; }
 
-        public World(int x = 20, int y = 20)
+        public World(int height = 20, int width = 20)
         {
-            X = x;
-            Y = y;
+            Height = height;
+            Width = width;
             GenerateWorld();
         }
 

@@ -9,6 +9,7 @@ namespace SimpleGamesLib
         private int _baseHealth;
         private int _baseDamage;
         private int _baseDefense;
+        private decimal _position;
 
         public int BaseHealth
         {
@@ -26,6 +27,12 @@ namespace SimpleGamesLib
         {
             get => _baseDefense;
             set => _baseDefense = value;
+        }
+
+        public decimal Position
+        {
+            get => _position;
+            set => _position = value;
         }
 
         public List<Item> Items { get; set; }
