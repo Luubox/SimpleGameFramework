@@ -31,6 +31,8 @@ namespace SimpleGamesLib.Models
 
     public class Creature
     {
+        //TODO Differentiate NPCs from Player Characters
+
         private IState _state;
         private int _baseHealth;
         private int _baseDamage;
@@ -71,7 +73,7 @@ namespace SimpleGamesLib.Models
         {
             _state = Alive.GetInstance;
         }
-
+        
         //public int GetEffectiveHealthValue()
         //{
         //    return BaseHealth * Buffs.FindAll(i => i.Type == "Health").Sum(i => i.Value);
@@ -80,7 +82,6 @@ namespace SimpleGamesLib.Models
         public int GetAttackValue()
         {
             return BaseDamage + Items.FindAll(i => i.Type == "Offensive").Sum(i => i.Value);
-
             //TODO buff check
         }
         
