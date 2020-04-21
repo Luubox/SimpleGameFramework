@@ -1,15 +1,45 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
+using SimpleGamesLib.Interfaces;
 
-namespace SimpleGamesLib
+namespace SimpleGamesLib.Models
 {
+    public class Alive : IState
+    {
+        private static Alive instance = new Alive();
+        public static Alive GetInstance => instance;
+
+        private Alive() { }
+
+        public void Interact(Creature creature)
+        {
+            //engage combat
+        }
+    }
+    public class Dead : IState
+    {
+        private static Dead instance = new Dead();
+        public static Dead GetInstance => instance;
+
+        private Dead() { }
+
+        public void Interact(Creature creature)
+        {
+            //loot or walk through
+        }
+    }
+
     public class Creature
     {
+        private IState _state;
         private int _baseHealth;
         private int _baseDamage;
         private int _baseDefense;
         private decimal _position;
+        public IState State
+        {
+            set => _state = value;
+        }
 
         public int BaseHealth
         {
@@ -37,6 +67,11 @@ namespace SimpleGamesLib
 
         public List<Item> Items { get; set; }
 
+        public Creature()
+        {
+            _state = Alive.GetInstance;
+        }
+
         //public int GetEffectiveHealthValue()
         //{
         //    return BaseHealth * Buffs.FindAll(i => i.Type == "Health").Sum(i => i.Value);
@@ -59,18 +94,19 @@ namespace SimpleGamesLib
            return GetAttackValue();
         }
 
-        public int Defend(int incomingDamage)
+        public void Defend(int incomingDamage)
         {
             incomingDamage -= GetDefenseValue();
 
             if (incomingDamage > 0) _baseHealth -= incomingDamage;
 
-            return _baseHealth;
+            if (_baseHealth <= 0) _state = Dead.GetInstance;
         }
 
         public void Loot(Item i)
         {
             if (i != null) Items.Add(item: i);
         }
+        
     }
 }
